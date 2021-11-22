@@ -17,38 +17,62 @@ Find the number of entries which are not divisible by 7 in the first one billion
 * 
  */
 
-public class Problem3 {
+
+
+import java.math.BigInteger;
+
+public class PascalTriangle {
+
+    public static BigInteger calculateFactorial(int n) {
+        BigInteger PascalNumber = BigInteger.ONE;
+        for (int i=1; n>1;n--){ 
+         PascalNumber= PascalNumber.multiply(BigInteger.valueOf(n));
+    }
+
+    return  PascalNumber;
+}
+
+
+    public static BigInteger PascalTriangleMethod(int n,int r) {
+        return calculateFactorial(n).divide(calculateFactorial(n-r).multiply(calculateFactorial(r)));
+
 
 
     public static void main(String args[]) {
-        int counter = 0;
-        long [][] tri = new long[110][110];
-        for (int i = 0; i < 110; i++) {
-            for (int j = 0; j < i; j++) {
-                if (j == i || j == 0) {
-                    tri[i][j] = 1;
-                    if (tri[i][j] % 7 != 0){//this checks if each of the entries in the 2D are not divisble by 7 and creates a counter to keep track of these entries
-                        counter++;
-                    }
-                    if (tri[i][j] > 0) {
-                        System.out.print(tri[i][j] + " ");
-                    }
-                } else {
-                    tri[i][j] = tri[i - 1][j - 1] + tri[i - 1][j];
-                    if (tri[i][j] > 0) {
-                        System.out.print(tri[i][j] + " ");
-                        if (tri[i][j] % 7 != 0)
-                            counter++;
-                    }
-                }
+        System.out.println();
+        int n,i,j;
+
+        n=109;
+        int count = 0;
+        for(i = 0; i <= n; i++) {
+            for(j = 0; j <= n-i; j++){
+                System.out.print(" ");
             }
-            System.out.println("");
+            for( j = 0; j <= i; j++){
+
+
+                System.out.print(" "+PascalTriangleMethod(i, j));
+                if(!(PascalTriangleMethod(i, j).mod(BigInteger.valueOf(7))).equals(BigInteger.ZERO)){
+                    count++;
+                }
+
+
+            }
+            System.out.println();
+
+
+
         }
-        //the Answer for 109 rows of the pascal's triangle should be 2496 however I was having trouble with the biggest long numbers going negative so it prints 2761 instead
+      //the Answer for 109 rows of the pascal's triangle should be 2496 however I keep getting 2526 so it prints that number instead
         //which is wrong
-        System.out.println(counter);//this Prints out the total entries which are not divisible by 7 within the entire pascal's Triangle array 
+       
+        System.out.println("the number of entries which are not divisivle by 7 is "+count+"\n");
+
+
     }
 }
+       
+    
 
 
 
